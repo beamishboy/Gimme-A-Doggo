@@ -2,7 +2,7 @@
 const dogDiv = document.querySelectorAll(".panel-doggo");
 const searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", breedSearch);
-var searchString = "hound"
+var searchString = "hound";
 
 console.log(searchString);
 
