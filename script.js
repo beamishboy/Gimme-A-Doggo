@@ -1,8 +1,9 @@
 
-const dogDiv = document.querySelectorAll(".panel-doggo");
+const dogDivs = document.querySelectorAll(".panel-doggo");
 const searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", breedSearch);
-var searchString = "hound";
+var searchString = "dog";
+document.querySelector("#breed-search-box").value = searchString;
 
 console.log(searchString);
 
@@ -15,8 +16,8 @@ function breedSearch(event) {
     getMyDoggos(searchString);
 }
 
-async function populateDogDiv(divIndex, dogIndex, data) {
-    const imageRef = data[dogIndex].reference_image_id;
+async function populateDogDiv(divIndex, dogBreed) {
+    const imageRef = dogBreed.reference_image_id;
     const imageRequestURL = `https://api.thedogapi.com/v1/images/${imageRef}`;
     const resImage = await fetch(imageRequestURL, {
         method: 'GET',
@@ -28,9 +29,9 @@ async function populateDogDiv(divIndex, dogIndex, data) {
     })
     const dataImage = await resImage.json();
     const imageURL = dataImage.url;
-    dogDiv[divIndex].style.backgroundImage = `url("${imageURL}")`;
-    const breedName = data[dogIndex].name;
-    dogDiv[divIndex].innerHTML = breedName
+    dogDivs[divIndex].style.backgroundImage = `url("${imageURL}")`;
+    const breedName = dogBreed.name;
+    dogDivs[divIndex].innerHTML = breedName;
 }
 
 async function getMyDoggos(term) {
@@ -45,14 +46,10 @@ async function getMyDoggos(term) {
     })
 
     const data = await res.json();
-    const numOfBreeds = data.length;
-    console.log(`Number of breeds: ${numOfBreeds}`);
-    // const breedsWithPics = data.filter(item => item.)
+    console.log(`Number of breeds: ${data.length}`);
+    const cleanArray = data.filter(item => item.reference_image_id !== undefined);
+    const numOfBreeds = cleanArray.length;
+    console.log(`Cleaned number of breeds: ${numOfBreeds}`);
+    cleanArray.slice(0, dogDivs.length).forEach((item, idx) => populateDogDiv(idx, item));
 
-    populateDogDiv(0, 0, data)
-    populateDogDiv(1, 1, data)
-    populateDogDiv(2, 2, data)
-    populateDogDiv(3, 3, data)
-    populateDogDiv(4, 4, data)
-    populateDogDiv(5, 5, data)
 }
