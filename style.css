@@ -1,0 +1,102 @@
+#topNav {
+    height: 3rem;
+    background-color: rgb(74, 119, 202);
+}
+
+header {
+    min-height: 5rem;
+    background-color: rgb(255, 201, 130);
+    padding:0rem 2rem;
+}
+
+#main {
+    background-color: lightgrey;
+}
+
+/* #main .row {
+    padding: 0.5rem 0rem;
+} */
+
+/* .main-col {
+    padding:0.5rem;
+} */
+
+.panel-doggo {
+    /* margin: 0.5rem; */
+    background-color: mintcream; 
+    border: linen solid;
+    border-width: 3px 3px 3px 3px;
+    border-radius: 2rem;
+    box-shadow: rgb(100, 100, 139) 0.5rem 0.5rem 1rem;
+    box-sizing: border-box;
+    min-height:calc(100% - 2rem);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    display:flex;
+    align-items: center;
+    justify-content: center; 
+    color:white;
+    height:22rem;
+}
+
+
+::-webkit-scrollbar {
+ height:12px; 
+ background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(139, 139, 139);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+    margin: 0px 2rem;
+}
+
+::-webkit-scrollbar-track-piece
+{
+   display:none;
+}
+
+
+footer {
+    height: 3rem;
+    background-color: rgb(126, 124, 123);
+}
+
+/* grid-breakpoints
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px 
+*/
+
+@media (min-width: 576px) {
+    .panel-doggo {
+        height: 12rem;
+    }
+}
+
+@media (min-width:768px) {
+    #main .row {
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: block;
+        overflow-y: hidden; 
+    }
+
+    .main-col {
+        display: inline-block;
+    }
+
+    .panel-doggo {
+        height: 18rem;
+    }
+    
+}
+
+
