@@ -4,6 +4,8 @@ const searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", breedSearch);
 var searchString = "hound"
 
+console.log(searchString);
+
 getMyDoggos(searchString);
 
 function breedSearch(event) {
