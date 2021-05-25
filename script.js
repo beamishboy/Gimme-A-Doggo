@@ -14,28 +14,27 @@ function breedSearch(event) {
         getMyDoggos(searchString);
     }
     catch (err) {
-        console.log(`An error occured in populateDogDiv: ${err}`)
+        console.log(`An error occured in populateDogDiv: ${err}`);
     }
 }
 
 async function populateDogDiv(dogBreed) {
     try {
-        // const newDiv = addNewDogDiv("New", placeholderImage);
-        // const imageRef = dogBreed.reference_image_id;
-        // const imageRequestURL = `https://api.thedogapi.com/v1/images/${dogBreed.reference_image_id}`;
-        // const resImage = await fetch(imageRequestURL, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-type': 'application/json',
-        //         'x-api-key': '82eed4b3-06a9-4889-81c9-31d0e354c8fa'
-        //     }
-        // })
-        // const dataImage = await resImage.json();
-        // const imageURL = dataImage.url;
-        const imageURL = dogBreed.image.url;
-        newDiv.firstElementChild.style.backgroundImage = `url("${dogBreed.image.url}")`;
-        console.log(`${dogBreed.name} image loaded from ${dogBreed.image.url}`);
+        const newDiv = addNewDogDiv("New", placeholderImage);
+        const imageRef = dogBreed.reference_image_id;
+        const imageRequestURL = `https://api.thedogapi.com/v1/images/${imageRef}`;
+        const resImage = await fetch(imageRequestURL, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+                'x-api-key': '82eed4b3-06a9-4889-81c9-31d0e354c8fa'
+            }
+        })
+        const dataImage = await resImage.json();
+        const imageURL = dataImage.url;
+        newDiv.firstElementChild.style.backgroundImage = `url(${imageURL})`;
+        console.log(`${dogBreed.name} image loaded from ${imageURL}`);
 
         newDiv.firstElementChild.innerHTML = dogBreed.name;
     }
@@ -60,9 +59,11 @@ async function getAllDoggos() {
         const data = await res.json();
         console.log(`Number of breeds: ${data.length}`);
         console.log(data);
-        const cleanArray = data.filter(item => (item.image != undefined && item.image.url !== undefined && item.image.url !== "" && item.image.url.trim() !== ""));
+        //const cleanArray = data.filter(item => (item.reference_image_id !== undefined && item.reference_image_id.trim() !== ""));
+        const cleanArray = data;
+        //cleanArray.forEach(item => console.log(item.reference_image_id));
         const numOfBreeds = cleanArray.length;
-        console.log(`Cleaned number of breeds: ${numOfBreeds}`);
+        //console.log(`Cleanedddd number of breeds: ${44}`);
         document.querySelectorAll(".main-col").forEach(item => item.remove());
         if (numOfBreeds === 0) {
             const blankDiv = addNewDogDiv("No breeds found", placeholderImage)
