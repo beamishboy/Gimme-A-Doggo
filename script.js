@@ -63,7 +63,7 @@ async function getAllDoggos() {
         const cleanArray = data;
         //cleanArray.forEach(item => console.log(item.reference_image_id));
         const numOfBreeds = cleanArray.length;
-        //console.log(`Cleanedddd number of breeds: ${44}`);
+        console.log(`Cleanedddd number of breeds: ${44}`);
         document.querySelectorAll(".main-col").forEach(item => item.remove());
         if (numOfBreeds === 0) {
             const blankDiv = addNewDogDiv("No breeds found", placeholderImage)
