@@ -20,10 +20,35 @@ function breedSearch(event) {
 
 async function populateDogDiv(dogBreed) {
     try {
-        const newDiv = addNewDogDiv("New", placeholderImage);
-        const imageRef = dogBreed.reference_image_id;
-        const imageRequestURL = `https://api.thedogapi.com/v1/images/${dogBreed.reference_image_id}`;
-        const resImage = await fetch(imageRequestURL, {
+        // const newDiv = addNewDogDiv("New", placeholderImage);
+        // const imageRef = dogBreed.reference_image_id;
+        // const imageRequestURL = `https://api.thedogapi.com/v1/images/${dogBreed.reference_image_id}`;
+        // const resImage = await fetch(imageRequestURL, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-type': 'application/json',
+        //         'x-api-key': '82eed4b3-06a9-4889-81c9-31d0e354c8fa'
+        //     }
+        // })
+        // const dataImage = await resImage.json();
+        // const imageURL = dataImage.url;
+        const imageURL = dogBreed.image.url;
+        newDiv.firstElementChild.style.backgroundImage = `url("${dogBreed.image.url}")`;
+        console.log(`${dogBreed.name} image loaded from ${dogBreed.image.url}`);
+
+        newDiv.firstElementChild.innerHTML = dogBreed.name;
+    }
+    catch (err) {
+        console.log(`An error occured in populateDogDiv: ${err}`)
+    }
+}
+
+async function getAllDoggos() {
+    try {
+        console.log(`*** Dowloading info of all breeds ***`);
+        const breedRequestURL = `https://api.thedogapi.com/v1/breeds/search?q=${term}`
+        const res = await fetch(breedRequestURL, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -31,15 +56,22 @@ async function populateDogDiv(dogBreed) {
                 'x-api-key': '82eed4b3-06a9-4889-81c9-31d0e354c8fa'
             }
         })
-        const dataImage = await resImage.json();
-        const imageURL = dataImage.url;
-        newDiv.firstElementChild.style.backgroundImage = `url("${imageURL}")`;
-        console.log(`${dogBreed.name} loaded: ${imageRef}: ${imageURL}`);
 
-        newDiv.firstElementChild.innerHTML = dogBreed.name;
+        const data = await res.json();
+        console.log(`Number of breeds: ${data.length}`);
+        console.log(data);
+        const cleanArray = data.filter(item => (item.image != undefined && item.image.url !== undefined && item.image.url !== "" && item.image.url.trim() !== ""));
+        const numOfBreeds = cleanArray.length;
+        console.log(`Cleaned number of breeds: ${numOfBreeds}`);
+        document.querySelectorAll(".main-col").forEach(item => item.remove());
+        if (numOfBreeds === 0) {
+            const blankDiv = addNewDogDiv("No breeds found", placeholderImage)
+        }
+
+        else cleanArray.forEach((item) => populateDogDiv(item));
     }
     catch (err) {
-        console.log(`An error occured in populateDogDiv: ${err}`)
+        console.log(`An error occured in getMyDoggos: ${err}`)
     }
 }
 
@@ -58,7 +90,8 @@ async function getMyDoggos(term) {
 
         const data = await res.json();
         console.log(`Number of breeds: ${data.length}`);
-        const cleanArray = data.filter(item => (item.reference_image_id !== undefined && item.reference_image_id != "" && item.reference_image_id.trim() != ""));
+        console.log(data);
+        const cleanArray = data.filter(item => (item.image != undefined && item.image.url !== undefined && item.image.url !== "" && item.image.url.trim() !== ""));
         const numOfBreeds = cleanArray.length;
         console.log(`Cleaned number of breeds: ${numOfBreeds}`);
         document.querySelectorAll(".main-col").forEach(item => item.remove());
@@ -92,6 +125,9 @@ function addNewDogDiv(breedName, imageURL) {
     catch (err) {
         console.log(`An error occured in addNewDogDiv: ${err}`)
     }
+}
 
+function BreedProperty(name) {
+    this.name = name;
 
 }
