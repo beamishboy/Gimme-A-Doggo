@@ -1,13 +1,14 @@
 const mainDiv = document.querySelector("#main-row");
 const searchForm = document.querySelector("#search-form");
 const placeholderImage = "/img/paw.png";
-searchForm.addEventListener("submit", () => populateDogDiv({ name: "Doggos Loading", url: placeholderImage }));
+//searchForm.addEventListener("submit", () => populateDogDiv({ name: "Doggos Loading", url: placeholderImage }));
 var searchString = "shep";
 document.querySelector("#breed-search-box").value = searchString;
-var referenceArray = [];
+const referenceArray = [];
+const activeBreedGroups = [];
 
-getAllDoggos().then(data => {
-    referenceArray = data;
+getAllDoggos().then(result => {
+    referenceArray.push(...result);
     getMyDoggos((searchString));
     searchForm.addEventListener("submit", breedSearch);
 });
@@ -23,15 +24,24 @@ function breedSearch(event) {
     }
 }
 
-async function populateDogDiv(dogBreed) {
+function populateDogDiv(dogBreed) {
     try {
         const newDiv = addNewDogDiv("New", placeholderImage);
         newDiv.firstElementChild.style.backgroundImage = `url(${dogBreed.url})`;
         newDiv.firstElementChild.innerHTML = dogBreed.name;
     }
     catch (err) {
-        console.log(`An error occured in populateDogDiv: ${err}`)
+        console.log(`An error occured in populateDogDiv: ${err}`);
     }
+}
+
+function populateBreedGroup(breedGroupArg) {
+    const index = activeBreedGroups.findIndex(item => item.breedGroup === breedGroupArg);
+    console.log(`Breed group ${breedGroupArg} find() result: ${index}`);
+    if (index >= 0) activeBreedGroups[index].count++;
+    else activeBreedGroups.push({ breedGroup: breedGroupArg, count: 1 });
+    console.log(`activeBreedGroups now has ${activeBreedGroups.length} elements`);
+    console.log(activeBreedGroups);
 }
 
 async function getAllDoggos() {
@@ -63,9 +73,10 @@ async function getMyDoggos(term) {
     try {
         console.log(`*** Searching for: ${term} ***`);
         const cleanArray = [];
+        activeBreedGroups.splice(0, activeBreedGroups.length);  //Empty the array
 
         if (term.trim() == "") {
-            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url } }));
+            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Not Specified" } }));
         } else {
             const breedRequestURL = `https://api.thedogapi.com/v1/breeds/search?q=${term}`
             const res = await fetch(breedRequestURL, {
@@ -79,17 +90,20 @@ async function getMyDoggos(term) {
 
             const data = await res.json();
             console.log(`Number of search results: ${data.length}`);
-            cleanArray.push(...data.map(item => referenceArray.find(element => element.id === item.id)).filter(item => item != undefined).map(item => { return { name: item.name, url: item.image.url } }));
+            cleanArray.push(...data.map(item => referenceArray.find(element => element.id === item.id)).filter(item => item != undefined).map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Not Specified" } }));
         }
 
         const numOfBreeds = cleanArray.length;
         console.log(`Clean search results: ${numOfBreeds}`);
         document.querySelectorAll(".main-col").forEach(item => item.remove());
         if (numOfBreeds === 0) {
-            const blankDiv = addNewDogDiv("No breeds found", placeholderImage)
-        }
+            const blankDiv = addNewDogDiv("No breeds found", placeholderImage);
+        } else cleanArray.forEach((item) => {
+            populateDogDiv(item);
+            populateBreedGroup(item.breedGroup);
 
-        else cleanArray.forEach((item) => populateDogDiv(item));
+        });
+        console.log(activeBreedGroups);
     }
     catch (err) {
         console.log(`An error occured in getMyDoggos: ${err}`)
@@ -98,7 +112,6 @@ async function getMyDoggos(term) {
 
 function addNewDogDiv(breedName, imageURL) {
     try {
-        const markup = `<div class="panel-doggo">${breedName}</div>`;
         const newDiv = document.createElement("div");
         newDiv.className = "col-md-4 col-sm-6 main-col";
 
@@ -119,5 +132,4 @@ function addNewDogDiv(breedName, imageURL) {
 
 function BreedProperty(name) {
     this.name = name;
-
 }
