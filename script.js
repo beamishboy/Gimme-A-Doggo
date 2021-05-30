@@ -11,6 +11,36 @@ const searchedArray = [];
 
 const propertiesArray = [];
 
+const substitutionArray = [
+    { term: "Bold", synonyms: ["Courageous", "Brave"] },
+    { term: "Reliable", synonyms: ["Faithful", "Devoted", "Trustworthy", "Loyal"] },
+    { term: "Happy", synonyms: ["Cheerful", "Gay", "Merry", "Joyful"] },
+    { term: "Confident", synonyms: ["Self-confidence", "Self-assured"] },
+    { term: "Intelligent", synonyms: ["Bright", "Clever", "Cunning", "Rational"] },
+    { term: "Proud", synonyms: ["Self-important"] },
+    { term: "Strong Willed", synonyms: ["Willful", "Determined", "Tenacious"] },
+    { term: "Calm", synonyms: ["Quiet", "Thoughtful"] },
+    { term: "Lively", synonyms: ["Spirited", "Spunky", "Bubbly", "Boisterous", "Feisty", "Adventurous", "Wild", "Fun-loving"] },
+    { term: "Kind", synonyms: ["Benevolent", "Generous", "Great-hearted"] },
+    { term: "Keen", synonyms: ["Eager"] },
+    { term: "Composed", synonyms: ["Unflappable", "Stable", "Steady"] },
+    { term: "Stubborn", synonyms: ["Opinionated"] },
+    { term: "Dominant", synonyms: ["Assertive", "Aggressive", "Bossy", "Fierce"] },
+    { term: "Diligent", synonyms: ["Hard-working", "Hardworking", "Dutiful", "Responsible"] },
+    { term: "Sociable", synonyms: ["Companionable", "Extroverted", "Amiable", "People-Oriented", "Easygoing"] },
+    { term: "Strong", synonyms: ["Sturdy", "Hardy", "Powerful", "Rugged"] },
+    { term: "Alert", synonyms: ["Vigilant"] },
+    { term: "Friendly", synonyms: ["Easygoing", "Good-natured", "Good-tempered", "Cooperative", "Responsive", "Receptive", "Respectful", "Cooperative", "Gentle", "Tolerant"] },
+    { term: "Quick", synonyms: "Fast" },
+    { term: "Lovable", synonyms: ["Charming", "Sweet-natured", "Sweet-Tempered"] },
+    { term: "Watchful", synonyms: "Cautious" }
+];
+
+function substitute(word) {
+    const findItem = substitutionArray.find(item => item.synonyms.includes(word));
+    return findItem ? findItem.term : word;
+}
+
 
 getAllDoggos().then(result => {
     referenceArray.push(...result);
@@ -63,7 +93,7 @@ async function getMyDoggos(term) {
         propertiesArray.splice(0, propertiesArray.length);  //Empty the array
 
         if (term.trim() == "") {
-            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified" } }));
+            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)), bredFor: item.bred_for, lifeSpan: item.life_span } }));
         } else {
             const breedRequestURL = `https://api.thedogapi.com/v1/breeds/search?q=${term}`
             const res = await fetch(breedRequestURL, {
@@ -77,13 +107,13 @@ async function getMyDoggos(term) {
 
             const data = await res.json();
             console.log(`Number of search results: ${data.length}`);
-            cleanArray.push(...data.map(item => referenceArray.find(element => element.id === item.id)).filter(item => item != undefined).map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified" } }));
+            cleanArray.push(...data.map(item => referenceArray.find(element => element.id === item.id)).filter(item => item != undefined).map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament == undefined ? ["Unspecified"] : item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)), bredFor: item.bred_for, lifeSpan: item.life_span } }));
         }
 
         const numOfBreeds = cleanArray.length;
         console.log(`Clean search results: ${numOfBreeds}`);
 
-        /********** Dislaying the dogs **********/
+        /********** Dislaying the dogs  and adding properties **********/
         document.querySelectorAll(".main-col").forEach(item => item.remove());
         document.querySelectorAll(".property-value").forEach(item => item.remove());
         if (numOfBreeds === 0) {
@@ -91,8 +121,9 @@ async function getMyDoggos(term) {
         } else cleanArray.forEach((item) => {
             populateDogDiv(item);
             addProperty("breed-group", item.breedGroup);
+            item.temperament.forEach(element => addProperty("temperament", element));
         });
-        /****************************************/
+        /****************************************************************/
 
         searchedArray.splice(0, searchedArray.length);
         searchedArray.push(...cleanArray);
@@ -177,7 +208,8 @@ function addNewPropertyValueDiv(property, propertyValue) {
 function filterAndDisplayData(event) {
     event.target.classList.toggle("active");
     const activeBreedGroups = findActiveProperties("breed-group");
-    const dogsToDisplay = searchedArray.filter(item => activeBreedGroups.includes(item.breedGroup));
+    const activeTemperaments = findActiveProperties("temperament")
+    const dogsToDisplay = searchedArray.filter(item => activeBreedGroups.includes(item.breedGroup)).filter(item => item.temperament.find(element => activeTemperaments.includes(element)));
     console.log(dogsToDisplay);
 
     /********** Dislaying the dogs **********/
