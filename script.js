@@ -37,19 +37,18 @@ const coverInfoHTML = `
 </div> `
 
 const substitutionArray = [
-    { term: "Bold", synonyms: ["Courageous", "Brave"] },
+    { term: "Bold", synonyms: ["Courageous", "Brave", "Fearless"] },
     { term: "Reliable", synonyms: ["Faithful", "Devoted", "Trustworthy", "Loyal"] },
     { term: "Happy", synonyms: ["Cheerful", "Gay", "Merry", "Joyful"] },
     { term: "Confident", synonyms: ["Self-confidence", "Self-assured"] },
     { term: "Intelligent", synonyms: ["Bright", "Clever", "Cunning", "Rational"] },
     { term: "Proud", synonyms: ["Self-important"] },
-    { term: "Strong Willed", synonyms: ["Willful", "Determined", "Tenacious"] },
+    { term: "Strong Willed", synonyms: ["Willful", "Determined", "Tenacious", "Stubborn", "Opinionated"] },
     { term: "Calm", synonyms: ["Quiet", "Thoughtful"] },
     { term: "Lively", synonyms: ["Spirited", "Spunky", "Bubbly", "Boisterous", "Feisty", "Adventurous", "Wild", "Fun-loving"] },
     { term: "Kind", synonyms: ["Benevolent", "Generous", "Great-hearted"] },
     { term: "Keen", synonyms: ["Eager"] },
     { term: "Composed", synonyms: ["Unflappable", "Stable", "Steady"] },
-    { term: "Stubborn", synonyms: ["Opinionated"] },
     { term: "Dominant", synonyms: ["Assertive", "Aggressive", "Bossy", "Fierce"] },
     { term: "Diligent", synonyms: ["Hard-working", "Hardworking", "Dutiful", "Responsible"] },
     { term: "Sociable", synonyms: ["Companionable", "Extroverted", "Amiable", "People-Oriented", "Easygoing"] },
@@ -114,7 +113,7 @@ async function getMyDoggos(term) {
         propertiesArray.splice(0, propertiesArray.length);  //Empty the array
 
         if (term.trim() == "") {
-            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)), bredFor: item.bred_for, lifeSpan: item.life_span } }));
+            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament == undefined ? ["Unspecified"] : [...new Set(item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)))], bredFor: item.bred_for, lifeSpan: item.life_span } }));
         } else {
             const breedRequestURL = `https://api.thedogapi.com/v1/breeds/search?q=${term}`
             const res = await fetch(breedRequestURL, {
@@ -144,6 +143,7 @@ async function getMyDoggos(term) {
             addProperty("breed-group", item.breedGroup);
             item.temperament.forEach(element => addProperty("temperament", element));
         });
+        displayPropertyDivs();
         /****************************************************************/
 
         searchedArray.splice(0, searchedArray.length);
@@ -153,6 +153,7 @@ async function getMyDoggos(term) {
         console.log(`An error occured in getMyDoggos: ${err}`);
     }
 }
+
 
 
 function populateDogDiv(dogBreed) {
@@ -196,30 +197,29 @@ function addProperty(propertyNameArg, propertyValueArg) {
 
     if (nameIndex < 0) {
         propertiesArray.push({ propertyName: propertyNameArg, propertyValuesArray: [{ propertyValue: propertyValueArg, count: 1 }] });
-        addNewPropertyValueDiv(propertyNameArg, propertyValueArg);
-        console.log(`Property not found in propertiesArray, added {${propertyNameArg}: [{${propertyValueArg}:1}]}`);
+        // addNewPropertyValueDiv(propertyNameArg, propertyValueArg);
     }
     else {
         const valueIndex = propertiesArray[nameIndex].propertyValuesArray.findIndex(item => item.propertyValue === propertyValueArg)
         if (valueIndex >= 0) {
             propertiesArray[nameIndex].propertyValuesArray[valueIndex].count++;
-            console.log(`Property ${propertyNameArg} found in propertiesArray, incremented count of value ${propertyValueArg}`);
         }
         else {
             propertiesArray[nameIndex].propertyValuesArray.push({ propertyValue: propertyValueArg, count: 1 });
-            addNewPropertyValueDiv(propertyNameArg, propertyValueArg);
-            console.log(`Property ${propertyNameArg} found in propertiesArray, added value {${propertyValueArg}:1}`);
+            // addNewPropertyValueDiv(propertyNameArg, propertyValueArg);
         }
     }
-    console.log(propertiesArray);
 }
 
-
+function displayPropertyDivs() {
+    propertiesArray.forEach(item => item.propertyValuesArray.sort((a, b) => b.count - a.count));
+    console.log(propertiesArray);
+    propertiesArray.forEach(item => item.propertyValuesArray.forEach(element => addNewPropertyValueDiv(item.propertyName, element.propertyValue)));
+}
 
 function addNewPropertyValueDiv(property, propertyValue) {
     try {
         const container = document.querySelector(`#${property}`);
-        console.log(container);
         const propertyDiv = document.createElement("div");
         propertyDiv.className = "property-value";
         propertyDiv.innerText = propertyValue;
