@@ -4,12 +4,37 @@ const searchForm = document.querySelector("#search-form");
 
 const placeholderImage = "/img/paw.png";
 //searchForm.addEventListener("submit", () => populateDogDiv({ name: "Doggos Loading", url: placeholderImage }));
-var searchString = "mal";
+var searchString = "bull";
 document.querySelector("#breed-search-box").value = searchString;
 const referenceArray = [];
 const searchedArray = [];
 
 const propertiesArray = [];
+
+const coverInfoHTML = `
+<div class="cover-info">
+    <div class="cover-name cover-item">
+        <span class="cover-label"></span>
+        <span class="cover-value">Dummy </span>
+    </div>
+    <div class="cover-breed-group cover-item">
+        <span class="cover-label">Breed Group: </span>
+        <span class="cover-value">Dummy </span>
+    </div>
+    <div class="cover-temperament cover-item">
+        <span class="cover-label">Temperament: </span>
+        <span class="cover-value">Dummy </span>
+    </div>
+    <div class="cover-bred-for cover-item">
+        <span class="cover-label">Bred for: </span>
+        <span class="cover-value">Dummy </span>
+    </div>    
+    <div class="cover-life-span cover-item">
+    <span class="cover-label">Life Span: </span>
+    <span class="cover-value">Dummy </span>
+</div>
+
+</div> `
 
 const substitutionArray = [
     { term: "Bold", synonyms: ["Courageous", "Brave"] },
@@ -41,7 +66,6 @@ function substitute(word) {
     return findItem ? findItem.term : word;
 }
 
-
 getAllDoggos().then(result => {
     referenceArray.push(...result);
     getMyDoggos((searchString));
@@ -58,9 +82,6 @@ function breedSearch(event) {
         console.log(`An error occured in breedSearch: ${err}`);
     }
 }
-
-
-
 
 async function getAllDoggos() {
     try {
@@ -107,7 +128,7 @@ async function getMyDoggos(term) {
 
             const data = await res.json();
             console.log(`Number of search results: ${data.length}`);
-            cleanArray.push(...data.map(item => referenceArray.find(element => element.id === item.id)).filter(item => item != undefined).map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament == undefined ? ["Unspecified"] : item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)), bredFor: item.bred_for, lifeSpan: item.life_span } }));
+            cleanArray.push(...data.map(item => referenceArray.find(element => element.id === item.id)).filter(item => item != undefined).map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament == undefined ? ["Unspecified"] : [...new Set(item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)))], bredFor: item.bred_for ? item.bred_for : "Unspecified", lifeSpan: item.life_span ? item.life_span : "Unspecified" } }));
         }
 
         const numOfBreeds = cleanArray.length;
@@ -138,7 +159,12 @@ function populateDogDiv(dogBreed) {
     try {
         const newDiv = addNewDogDiv("New", placeholderImage);
         newDiv.firstElementChild.style.backgroundImage = `url(${dogBreed.url})`;
-        newDiv.firstElementChild.innerHTML = dogBreed.name;
+        newDiv.firstElementChild.innerHTML = coverInfoHTML;
+        newDiv.firstElementChild.children[0].children[0].children[1].innerText = dogBreed.name;
+        newDiv.firstElementChild.children[0].children[1].children[1].innerText = dogBreed.breedGroup;
+        newDiv.firstElementChild.children[0].children[2].children[1].innerText = dogBreed.temperament.join(", ")
+        newDiv.firstElementChild.children[0].children[3].children[1].innerText = dogBreed.bredFor;
+        newDiv.firstElementChild.children[0].children[4].children[1].innerText = dogBreed.lifeSpan;
     }
     catch (err) {
         console.log(`An error occured in populateDogDiv: ${err}`);
@@ -152,7 +178,7 @@ function addNewDogDiv(breedName, imageURL) {
 
         const panelDiv = document.createElement("div");
         panelDiv.className = "panel-doggo";
-        panelDiv.innerText = breedName;
+        panelDiv.innerHTML = breedName;
         panelDiv.style.backgroundImage = `url(${imageURL})`;
 
         newDiv.appendChild(panelDiv);

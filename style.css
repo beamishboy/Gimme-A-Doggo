@@ -1,6 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Yesteryear:wght@400;700&display=swap');
+
 #topNav {
     height: 3rem;
     background-color: rgb(74, 119, 202);
+    font-family: "Yesteryear", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    color:white;
+    padding: 0.2rem 0rem 0.5rem 1rem;
+    margin: 0;
 }
 
 header {
@@ -12,7 +19,7 @@ header {
 #main {
     background-color: lightgrey;
 }
- n7t
+ 
 
 .main-col {
     padding: .5rem .5rem .5rem 0rem;
@@ -31,13 +38,44 @@ header {
     background-size: cover;
     background-position: center top;
     display:flex;
-    align-items: center;
-    justify-content: center; 
+    /* flex-direction: column; */
+    /* align-items: stretch; */
+    /* justify-content:flex-end;  */
     color:white;
     height:22rem;
+    position:relative;
+    overflow-y: hidden;
 }
 
+.cover-info {
+    /* padding-bottom: 1rem; */
+    position:absolute;
+    bottom:0rem;
+    max-height:2rem;
+    width:100%;
+    transition: max-height 300ms linear;
+}   
 
+.panel-doggo:hover .cover-info {
+    max-height:10rem;
+}
+
+.cover-item {
+    background-color:rgba(255, 255, 255, 0.9);
+    padding-left: 2rem;
+    font-size: 12px;
+    color: black;
+}
+
+.cover-item.cover-name {
+    background-color:rgba(0,0,0,0.3);
+    font-size: 24px;
+    color:white;
+}
+
+.cover-label {
+    font-weight: bold;
+}
 
 .property {
     min-height: 18px;
@@ -131,7 +169,7 @@ footer {
 
 @media (min-width:768px) {
     #main .row {
-        overflow-x: scroll;
+        /* overflow-x: scroll; */
         white-space: nowrap;
         display: block;
         overflow-y: hidden; 
@@ -139,6 +177,7 @@ footer {
 
     .main-col {
         display: inline-block;
+        white-space: normal;
     }
 
     .panel-doggo {
