@@ -1,6 +1,11 @@
+const yearSpan = document.querySelector("#year");
+yearSpan.innerText = new Date().getFullYear();
+
+
 const mainDiv = document.querySelector("#main-row");
 const breedGroupsContainer = document.querySelector("#breed-group");
 const searchForm = document.querySelector("#search-form");
+
 
 const placeholderImage = "/img/paw.png";
 //searchForm.addEventListener("submit", () => populateDogDiv({ name: "Doggos Loading", url: placeholderImage }));
@@ -113,7 +118,7 @@ async function getMyDoggos(term) {
         propertiesArray.splice(0, propertiesArray.length);  //Empty the array
 
         if (term.trim() == "") {
-            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament == undefined ? ["Unspecified"] : [...new Set(item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)))], bredFor: item.bred_for, lifeSpan: item.life_span } }));
+            cleanArray.push(...referenceArray.map(item => { return { name: item.name, url: item.image.url, breedGroup: item.breed_group ? item.breed_group : "Unspecified", temperament: item.temperament == undefined ? ["Unspecified"] : [...new Set(item.temperament.split(",").map(item => item.trim()).map(item => substitute(item)))], bredFor: item.bred_for == undefined ? "Unspecified" : item.bred_for, lifeSpan: item.life_span == undefined ? "Unspecified" : item.life_span } }));
         } else {
             const breedRequestURL = `https://api.thedogapi.com/v1/breeds/search?q=${term}`
             const res = await fetch(breedRequestURL, {
