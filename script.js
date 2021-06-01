@@ -4,7 +4,7 @@ const searchForm = document.querySelector("#search-form");
 
 const placeholderImage = "/img/paw.png";
 //searchForm.addEventListener("submit", () => populateDogDiv({ name: "Doggos Loading", url: placeholderImage }));
-var searchString = "bull";
+var searchString = "";
 document.querySelector("#breed-search-box").value = searchString;
 const referenceArray = [];
 const searchedArray = [];
