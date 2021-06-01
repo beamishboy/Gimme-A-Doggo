@@ -13,7 +13,17 @@
 
 <body>
     <nav id="topNav">
-        Gimme a Doggo!
+        <div id="heading">Gimme a Doggo!</div>
+        <div id="nav-menu">
+            <button class="icon" id="toggle">
+                X
+            </button>
+            <ul>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#attributionsModal">FAQ</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
     <header>
@@ -26,9 +36,8 @@
                     </form>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
-                    <button type="submit" id="breed-button" class="py-3 my-2 btn btn-block w-100 btn-secondary">
-                        Search
-                    </button>
+                    <button type="submit" id="breed-button"
+                        class="py-3 my-2 btn btn-block w-100 btn-secondary">Search</button>
                 </div>
             </div>
         </form>
@@ -94,6 +103,26 @@
             </div>
         </div>
     </footer>
+
+
+    <!-- MODAL -->
+    <div class="modal fade" id="attributionsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title  text-center" id="exampleModalLabel">FAQ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h1 class="display-7">Q1</h1>
+                    <p class="lead">Lorem ipsum dolor sit.</p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"

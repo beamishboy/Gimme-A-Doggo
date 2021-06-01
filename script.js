@@ -1,6 +1,9 @@
 const yearSpan = document.querySelector("#year");
 yearSpan.innerText = new Date().getFullYear();
 
+const toggle = document.getElementById("toggle")
+const navMenu = document.getElementById("nav-menu")
+toggle.addEventListener("click", () => navMenu.classList.toggle("active"))
 
 const mainDiv = document.querySelector("#main-row");
 const breedGroupsContainer = document.querySelector("#breed-group");

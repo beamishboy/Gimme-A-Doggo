@@ -9,18 +9,135 @@ html,body
 }
 
 body {
-    
     background-color: cornsilk;
 }
 
 #topNav {
     height: 2.9rem;
     background-color: rgb(74, 119, 202);
+    display:flex;
+    justify-content: space-between;
+    align-items:stretch;
+    overflow:visible;
+    margin:0;
+    padding:0;
+}
+
+#topNav #heading {
     font-family: "Yesteryear", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2rem;
     color:white;
-    padding: 0.2rem 0rem 0.5rem 1rem;
+    padding: 0rem 0.5rem;
     margin: 0;
+}
+
+#nav-menu {
+    /* background-color: rgba(0,0,0,0.3); */
+    padding: 0;
+    width:120px;
+    height: 2.9rem;
+    align-self:top;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 3px;
+    transition: height 0.4s linear;
+    overflow-y: hidden;
+    z-index: 100;
+    
+  }
+  
+#nav-menu.active {
+    height:12rem;
+    align-self: top;
+  }
+  
+  #nav-menu ul {
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width:100%;
+    height: 0;
+    transition: height 0.4s linear;
+  }
+  
+  #nav-menu.active ul {
+    height: calc(100% - 4rem);
+    /* padding: 0.5rem;
+    margin: 1rem 0rem 2rem 0rem; */
+  }
+  
+  #nav-menu ul li {
+    color:black;
+    transform: rotateX(180deg);
+    opacity: 0;
+    transition: transform 0.4s ease-in, opacity 0.4s linear, color 0.4s linear;
+    padding: 0.5rem ;
+  }
+  
+  #nav-menu.active ul li {
+    color:white;
+    opacity: 1;
+    transform: rotateX(360deg);
+    border-bottom: 1px gray solid;
+    padding: 0.5rem;
+  }
+  
+  #nav-menu ul a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    margin: 2px 10px;
+  }
+  
+  #nav-menu .icon {
+    background-color:transparent;
+    background-image: url(img/noun_Dog_small_noattrib_white.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color:transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    margin:0;
+    height: 2.9rem;
+    width: 2.9rem;
+    border-color: moccasin solid 2px;
+    transform: rotate(0deg);
+    transition: transform 0.2s linear;
+  }
+
+  #nav-menu.active .icon {
+    transform: rotate(-30deg);
+  }
+
+  #nav-menu:hover .icon {
+    transform: rotate(-30deg);
+  }
+  
+  .icon:focus {
+    outline: 0;
+  }
+  
+
+
+#breed-button:focus {
+    outline: none;
+    box-shadow:none;
+}
+
+#breed-button:active {
+    background-color: #999;
+}
+
+#breed-button:active::after {
+    content:"ing...";
 }
 
 header {
@@ -126,13 +243,18 @@ header {
     color:white;
     border-radius:12px;
     font-size: 12px;
-    padding: 1px 8px;
-    margin: 1px 3px 2px;
+    padding: 1px 8px 1px 8px;
+    margin: 1px 3px 2px 3px;
     box-shadow: #666 0px 1px 2px 1px;
     display:inline-flex; 
     align-items:center;
     justify-content: center;
     cursor:pointer;
+}
+
+.property-value:active {
+    box-shadow: #666 0px 0px 1px 1px;
+    margin: 2px 3px 1px 3px;
 }
 
 .property-value.active {
