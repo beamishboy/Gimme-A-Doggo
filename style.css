@@ -32,7 +32,6 @@ body {
 }
 
 #nav-menu {
-    /* background-color: rgba(0,0,0,0.3); */
     padding: 0;
     width:120px;
     height: 2.9rem;
@@ -332,5 +331,12 @@ a {
     /* CSS specific to hoverable (likely non-mobile) devices */ 
     #nav-menu:hover .icon {
         transform: rotate(-30deg);
+    }
+}
+
+@media (hover:none) {
+    /* CSS specific to non-hoverable (likely mobile) devices */ 
+    #nav-menu {
+        align-items: flex-end;
     }
 }
