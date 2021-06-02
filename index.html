@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://kit.fontawesome.com/663e56ae3a.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="style.css" </link>
@@ -19,12 +21,16 @@
                 X
             </button>
             <ul>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#attributionsModal">FAQ</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#faq-modal">FAQ</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#about-modal">About</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#contact-modal">Contact</a></li>
             </ul>
         </div>
     </nav>
+
+    <section id="nav-filler">
+
+    </section>
 
     <header>
         <form id="search-form" action="" method="get">
@@ -106,7 +112,7 @@
 
 
     <!-- MODAL -->
-    <div class="modal fade" id="attributionsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="faq-modal" tabindex="-1" aria-labelledby="FAQModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -114,14 +120,125 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h1 class="display-7">Q1</h1>
-                    <p class="lead">Lorem ipsum dolor sit.</p>
+                    <h1 class="display-7">What is this?</h1>
+                    <p class="lead">This is where you can search for dog breeds of various types and gaze at their
+                        pictures. May be even decide what kind of doggo you want to get.</p>
+
+                    <h1 class="display-7">How do I use it?</h1>
+                    <p class="lead">Enter part or whole of a breed name in the search box and press enter (or leave it
+                        blank - up to you). Pictures of dogs of resulting breeds will show up in the middle section.
+                        Scroll horizontally (if your browser window is wide enough) or vertically to look at all the
+                        search results. Hover (click on mobile devices) over any picture to view more details of the
+                        breed. Filter for breed group and temperament using the buttons underneath the pictures section.
+                    </p>
+
+                    <h1 class="display-7">How do the filters work?</h1>
+                    <p class="lead">If you select a breed group, pictures of dogs with that breed group will show up. If
+                        you select more than one, that dogs with breed group matching any of the selected ones
+                        will show up. If you select none, it is the same as selecting all. Similarly for temperament.
+                        The two filters are intersectional - i.e., dogs shown will be of breeds that match any
+                        of the selected breed groups and also match at least one of selected temperaments. The
+                        breed groups and temperaments listed appear in the order of their occurance within the search
+                        results - the more dogs with that group or temperament - the earlier it is listed.</p>
+
+                    <h1 class="display-7">Where do you get all this info from?</h1>
+                    <p class="lead">All this information, including the pictures, is from <a
+                            href="https://thedogapi.com">TheDogAPI</a>
+                        run by a guy called Aden. I may have tweaked the temperaments a little bit in a few places
+                        (e.g.,
+                        listing "cheerful" under "happy" and others like that) to make things a little simpler, but
+                        otherwise, it's all from that source. Thanks, Aden! </p>
+
+                    <h1 class="display-7">Is the information accurate or vetted in any way?</h1>
+                    <p class="lead">Can't vouch for that, you'll have to ask Aden. In a few places some information did
+                        seem a tad incongruous, but I'm not a dog expert, so it may just be my untrained perceptions.
+                    </p>
+
+                    <h1 class="display-7">Who are you?</h1>
+                    <p class="lead">I am a guy who appreciates dogs, does web development and has this venture called
+                        Solid Ground Partnerships, amongst other things. Got suggestions? Use the contact form
+                        under the menu to get in touch - I'd love to hear from you.</p>
+
+
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
+
+
+    <!-- MODAL - CONTACT -->
+    <div class="modal fade" id="contact-modal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title  text-center" id="exampleModalLabel">Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form name="contact" method="get" netlify>
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" class="form-control" name="uname" placeholder="Name">
+                        </div>
+
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" name="email" placeholder="Email">
+                        </div>
+
+                        <div class="input-group input-group-lg mb-3">
+                            <span class="input-group-text">
+                                <i class="fas fa-pencil-alt"></i>
+                            </span>
+                            <textarea class="form-control" placeholder="Message" name="message" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" name="submitButton" id="submitBtn"
+                            class="btn btn-secondary btn-maroon w-100">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL - ABOUT -->
+    <div class="modal fade" id="about-modal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title  text-center" id="contactModalLabel">About</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">Thinking of getting a dog but tired of all the "quizzy" web pages about which breed
+                        to get? Gimmy A Doggo gives you a way to quickly get to breeds of a kind while gazing at lovely
+                        doggo pictures. Just enter part of a breed name (if you have one in mind, or leave it blank) and
+                        filter amongst the resulting doggos for breed group and temperament.</p>
+                    <p class="lead">I appreciate dogs and Solid Ground Partnerships is my Web Development venture.
+                        Please
+                        use the contact form to get in touch for business enquiries or just to drop a message.</p>
+                    <h5>Attributions</h5>
+
+                    <p class="lead"> <a href="https://thenounproject.com/search/?q=dog&i=3717198"> Dog </a>by <a
+                            href="https://thenounproject.com/loritas/">Loritas Medina </a>from <a
+                            href="https://thenounproject.com">the Noun Project</a>. Image has been modified. </p>
+                    <p class="lead"> All photographs of dogs and data on dog breeds from <a
+                            href="https://thedogapi.com">TheDogAPI</a></p>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
 

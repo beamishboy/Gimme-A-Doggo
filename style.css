@@ -20,7 +20,11 @@ body {
     align-items:stretch;
     overflow:visible;
     margin:0;
-    padding:0;
+    padding:0;  
+    position: fixed;
+    width:100%;
+    top: 0;
+    z-index:200;
 }
 
 #topNav #heading {
@@ -119,6 +123,24 @@ body {
   .icon:focus {
     outline: 0;
   }
+
+
+.btn-maroon {
+    background-color: maroon;
+    color:white;
+}
+
+.btn-maroon:hover {
+    background-color: rgb(255, 201, 130);
+    color:maroon;
+}
+
+
+#nav-filler {
+    height: 2.9rem;
+    z-index:1;
+}
+
 
 #breed-button:focus {
     outline: none;
