@@ -117,15 +117,9 @@ body {
     transform: rotate(-30deg);
   }
 
-  #nav-menu:hover .icon {
-    transform: rotate(-30deg);
-  }
-  
   .icon:focus {
     outline: 0;
   }
-  
-
 
 #breed-button:focus {
     outline: none;
@@ -334,4 +328,9 @@ a {
     
 }
 
-
+@media (hover:hover) {
+    /* CSS specific to hoverable (likely non-mobile) devices */ 
+    #nav-menu:hover .icon {
+        transform: rotate(-30deg);
+    }
+}
