@@ -1,6 +1,6 @@
 # A website about doggos and their breeds
 
-Search and browse through various breeds of dogs, gaze at their pictures, and use convenient filtlers to get to your favorite ones
+Search and browse through various breeds of dogs, gaze at their pictures, and use convenient filters to get to your favorite ones
 
 ### Attributions
 [Dog](https://thenounproject.com/search/?q=dog&i=3717198) by [Loritas Medina](https://thenounproject.com/loritas/) from [The Noun Project](https://thenounproject.com/). Image has been modified.
