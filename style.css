@@ -196,13 +196,14 @@ header {
     /* padding-bottom: 1rem; */
     position:absolute;
     bottom:0rem;
-    max-height:2rem;
+    max-height:2.3rem;
     width:100%;
     transition: max-height 300ms linear;
 }   
 
 .panel-doggo:hover .cover-info {
     max-height:10rem;
+    background-image: "/img/paw.png";
 }
 
 .cover-item {
@@ -300,7 +301,7 @@ a {
 
 ::-webkit-scrollbar {
  height:12px; 
- background-color: transparent;
+ background-color: rgb(179, 179, 179);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -372,5 +373,9 @@ a {
     /* CSS specific to non-hoverable (likely mobile) devices */ 
     #nav-menu {
         align-items: flex-end;
+    }
+
+    #nav-menu ul {
+        text-align: right;
     }
 }

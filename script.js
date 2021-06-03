@@ -164,7 +164,8 @@ async function getMyDoggos(term) {
 
 function populateDogDiv(dogBreed) {
     try {
-        const newDiv = addNewDogDiv("New", placeholderImage);
+        const newDiv = addNewDogDiv("On the way...", placeholderImage);
+        mainDiv.appendChild(newDiv);
         newDiv.firstElementChild.style.backgroundImage = `url(${dogBreed.url})`;
         newDiv.firstElementChild.innerHTML = coverInfoHTML;
         newDiv.firstElementChild.children[0].children[0].children[1].innerText = dogBreed.name;
@@ -178,18 +179,16 @@ function populateDogDiv(dogBreed) {
     }
 }
 
-function addNewDogDiv(breedName, imageURL) {
+function addNewDogDiv(text, imageURL) {
     try {
+        const panelDiv = document.createElement("div");
+        panelDiv.style.backgroundImage = `url(${imageURL})`;
+        panelDiv.innerHTML = text;
+        panelDiv.className = "panel-doggo";
+
         const newDiv = document.createElement("div");
         newDiv.className = "col-md-4 col-sm-6 main-col";
-
-        const panelDiv = document.createElement("div");
-        panelDiv.className = "panel-doggo";
-        panelDiv.innerHTML = breedName;
-        panelDiv.style.backgroundImage = `url(${imageURL})`;
-
         newDiv.appendChild(panelDiv);
-        mainDiv.appendChild(newDiv);
 
         return newDiv;
     }
