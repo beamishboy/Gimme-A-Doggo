@@ -21,9 +21,10 @@
                 X
             </button>
             <ul>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#faq-modal">FAQ</a></li>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#about-modal">About</a></li>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#contact-modal">Contact</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#faq-modal" class="menu-link">FAQ</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#about-modal" class="menu-link">About</a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#contact-modal" class="menu-link">Contact</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -94,15 +95,15 @@
 
     <section id="bottom-band"></section>
 
-    <footer>
-        <div class="row pt-1 pb-0">
-            <div class="col-md-6 ps-5">
-                <p class="small ms-5 ps-5">
+    <footer class="container">
+        <div class="row pt-1 pb-0 h-100 ">
+            <div class="col-md-6" id="powered-by">
+                <p class="small m-0">
                     Powered by <a href="https://thedogapi.com/">The Dog API</a>
                 </p>
             </div>
-            <div class="col-md-6 pe-5">
-                <p class="small text-end me-5 pe-5">
+            <div class="col-md-6" id="copyright">
+                <p class="small m-0 p-0">
                     Copyright &copy; Solid Ground Partnerships,
                     <span id="year"></span>
                 </p>
@@ -134,9 +135,9 @@
 
                     <h1 class="display-7">How do the filters work?</h1>
                     <p class="lead">If you select a breed group, pictures of dogs with that breed group will show up. If
-                        you select more than one, that dogs with breed group matching any of the selected ones
+                        you select more than one, then dogs with breed group matching any of the selected ones
                         will show up. If you select none, it is the same as selecting all. Similarly for temperament.
-                        The two filters are intersectional - i.e., dogs shown will be of breeds that match any
+                        The two filters intersect - i.e., dogs shown will be of breeds that match any
                         of the selected breed groups and also match at least one of selected temperaments. The
                         breed groups and temperaments listed appear in the order of their frequency of occurance within
                         the search results - the more dogs with that group or temperament - the earlier it is listed.
@@ -225,7 +226,7 @@
                         filter amongst the resulting doggos for breed group and temperament.</p>
                     <p class="lead">I appreciate dogs and Solid Ground Partnerships is my Web Development venture.
                         Please
-                        use the contact form to get in touch for business enquiries or just to drop a message.</p>
+                        use the contact form to get in touch for business enquiries or to drop a message.</p>
                     <h5>Attributions</h5>
 
                     <p class="lead"> <a href="https://thenounproject.com/search/?q=dog&i=3717198"> Dog </a>by <a
@@ -234,8 +235,9 @@
                     <p class="lead"> All photographs of dogs and data on dog breeds from <a
                             href="https://thedogapi.com">TheDogAPI</a></p>
 
-
-
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>

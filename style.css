@@ -282,7 +282,8 @@ header {
 }
 
 footer {
-    /* padding-top: 1rem; */
+    padding-top: 0.5rem;
+    padding-bottom: 0.7rem;
     background-color: cornsilk;
 }
 
@@ -290,6 +291,10 @@ a {
     color: maroon;
     text-decoration: none;
     padding:0px;
+}
+
+#copyright {
+    text-align: right;
 }
 
 
@@ -346,7 +351,14 @@ a {
     .panel-doggo {
         height: 18rem;
     }
-    
+
+
+}
+
+@media (max-width:768px){
+    #copyright, #powered-by {
+        text-align: center;
+    }
 }
 
 @media (hover:hover) {

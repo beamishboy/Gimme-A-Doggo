@@ -15,7 +15,6 @@ var searchString = "";
 document.querySelector("#breed-search-box").value = searchString;
 const referenceArray = [];
 const searchedArray = [];
-
 const propertiesArray = [];
 
 const coverInfoHTML = `
